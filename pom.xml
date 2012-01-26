@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.neo4j.build</groupId>
+    <artifactId>parent-central</artifactId>
+    <version>31</version>
+    <relativePath />
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.neo4j.ha</groupId>
+  <artifactId>ha-rest-master-info</artifactId>
+  <name>Neo4j - HA Master Info Server Plugin</name>
+  <version>0.1</version>
+  <description>An unmanaged extension for Neo4j REST server that provides information about the cluster master</description>
+  <packaging>jar</packaging>
+
+  <properties>
+    <bundle.namespace>org.neo4j.server.app</bundle.namespace>
+    <short-name>ha-server-plugin</short-name>
+    <neo4j.version>1.5.1.RC6</neo4j.version>
+  </properties>
+
+  <scm>
+    <url>https://github.com/neo4j/enterprise/tree/master/ha</url>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>GNU Affero General Public License, Version 3</name>
+      <url>http://www.gnu.org/licenses/agpl-3.0-standalone.html</url>
+      <comments>The software ("Software") developed and owned by Network Engine for
+Objects in Lund AB (referred to in this notice as "Neo Technology") is
+licensed under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3 to all
+third parties and that license is included below.
+
+However, if you have executed an End User Software License and Services
+Agreement or an OEM Software License and Support Services Agreement, or
+another commercial license agreement with Neo Technology or one of its
+affiliates (each, a "Commercial Agreement"), the terms of the license in
+such Commercial Agreement will supersede the GNU AFFERO GENERAL PUBLIC
+LICENSE Version 3 and you may use the Software solely pursuant to the
+terms of the relevant Commercial Agreement.
+      </comments>
+    </license>
+  </licenses>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>false</skip>
+          <argLine>-Xmx1024m</argLine>
+          <!-- forkMode>perTest</forkMode -->
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <reportPlugins combine.children="append">
+            <plugin>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <configuration>
+                <detectJavaApiLink>true</detectJavaApiLink>
+                <detectLinks>true</detectLinks>
+                <quiet>true</quiet>
+                <excludePackageNames>*.impl.*</excludePackageNames>
+              </configuration>
+              <reports>
+                <report>javadoc</report>
+              </reports>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-descriptor</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+      <resources>
+	      <resource>
+	        <directory>src/main/resources</directory>
+	      </resource>
+	      <resource>
+	        <directory>${project.build.directory}/generated-sources</directory>
+	      </resource>
+	      <resource>
+	        <directory>${basedir}</directory>
+	        <targetPath>META-INF</targetPath>
+	        <includes>
+	          <include>NOTICE.txt</include>
+	          <include>LICENSE.txt</include>
+	          <include>CHANGES.txt</include>
+	          <include>LICENSES.txt</include>
+	        </includes>
+	      </resource>
+    </resources>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.neo4j</groupId>
+      <artifactId>neo4j-kernel</artifactId>
+      <version>${neo4j.version}</version>
+    </dependency>
+        <dependency>
+      <groupId>org.neo4j</groupId>
+      <artifactId>neo4j-ha</artifactId>
+      <version>${neo4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+  	  <groupId>org.neo4j</groupId>
+  	  <artifactId>server-api</artifactId>
+      <version>${neo4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>1.9</version>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile><!-- used for testing -->
+      <id>Linux-dependency-tools.jar</id>
+      <activation>
+        <os><name>Linux</name></os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.sun.tools</groupId>
+          <artifactId>tools</artifactId>
+          <version>${sun.tools.version}</version>
+          <scope>system</scope>
+          <systemPath>${java.home}/../lib/tools.jar</systemPath>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile><!-- used for testing -->
+      <id>Windows-dependency-tools.jar</id>
+      <activation>
+        <os><family>Windows</family></os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.sun.tools</groupId>
+          <artifactId>tools</artifactId>
+          <version>${sun.tools.version}</version>
+          <scope>system</scope>
+          <systemPath>${java.home}\\..\\lib\\tools.jar</systemPath>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
+</project>
+
