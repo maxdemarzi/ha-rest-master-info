@@ -1,0 +1,19 @@
+This is a simple unmanaged plugin for Neo4j REST server, which provides endpoints for asking an instance if it is the current HA master and which is the current HA master.
+
+Obviously this extension is not useful in a non-HA setting.
+
+To use this, issue
+
+mvn package
+
+in the top level directory and then get the jar from target/ . You can drop that into your server's plugins/ directory and add a line in neo4j-server.properties that reads like
+
+org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.ha.server.rest.info=/ha-info/
+
+When you restart you should be able to do a
+
+curl http://<server>:<port>/ha-info/masterinfo/{isMaster,getMaster}
+
+and get a true/false for the first one and the <server>:<ha-port> for the second.
+
+Note that getMaster returns not the REST port (default of 7474) but the HA port (default 6001). You will have to manipulate the string if you need different information, such as only the host.
