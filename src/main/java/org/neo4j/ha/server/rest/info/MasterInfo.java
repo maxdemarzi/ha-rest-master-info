@@ -81,7 +81,7 @@ public class MasterInfo
         {
             return "";
         }
-        Pair<String, Integer> socket = ( db ).getRawHaDb().getBroker().getMaster().other().getServer();
+        Pair<String, Integer> socket = db.getBroker().getMaster().other().getServer();
         return socket.first() + ":" + socket.other();
     }
 }

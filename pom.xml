@@ -17,7 +17,7 @@
   <properties>
     <bundle.namespace>org.neo4j.server.app</bundle.namespace>
     <short-name>ha-server-plugin</short-name>
-    <neo4j.version>1.5.1.RC6</neo4j.version>
+    <neo4j.version>1.8</neo4j.version>
   </properties>
 
   <scm>
