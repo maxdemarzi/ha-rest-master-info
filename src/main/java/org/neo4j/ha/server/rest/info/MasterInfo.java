@@ -53,7 +53,7 @@ public class MasterInfo
     /**
      * @return A String representation of true iff this machine is a master of a
      *         cluster, false otherwise, as returned by
-     *         {@link Boolean#toString(boolean)} of
+     *         {@link Boolean#toString(boolean)}
      */
     @GET
     @Produces( MediaType.TEXT_PLAIN )
