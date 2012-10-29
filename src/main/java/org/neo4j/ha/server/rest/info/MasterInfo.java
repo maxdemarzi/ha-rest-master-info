@@ -23,10 +23,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.helpers.Pair;
 import org.neo4j.kernel.HighlyAvailableGraphDatabase;
 
 /**
@@ -58,13 +59,21 @@ public class MasterInfo
     @GET
     @Produces( MediaType.TEXT_PLAIN )
     @Path( "/isMaster" )
-    public String isMaster()
+    public Response isMaster()
     {
         if ( db == null )
         {
-            return Boolean.toString( false );
+            return Response.status( Response.Status.INTERNAL_SERVER_ERROR ).entity( Boolean.toString( false ).getBytes()).build();
         }
-        return Boolean.toString( db.isMaster() );
+        if ( db.isMaster() )
+        {
+            return Response.status( Response.Status.OK ).entity( Boolean.toString( true ).getBytes()).build();
+        }
+        else
+        {
+            return Response.status( Response.Status.SEE_OTHER ).entity( Boolean.toString( false ).getBytes() ).header(
+                    HttpHeaders.LOCATION, db.getBroker().getMaster().other().getServerAsString() ).build();
+        }
     }
 
     /**
@@ -81,7 +90,6 @@ public class MasterInfo
         {
             return "";
         }
-        Pair<String, Integer> socket = db.getBroker().getMaster().other().getServer();
-        return socket.first() + ":" + socket.other();
+        return db.getBroker().getMaster().other().getServerAsString();
     }
 }
