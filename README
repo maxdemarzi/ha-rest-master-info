@@ -16,4 +16,6 @@ curl http://<server>:<port>/ha-info/masterinfo/{isMaster,getMaster}
 
 and get a true/false for the first one and the <server>:<ha-port> for the second.
 
+In addition, when true is returned, the response status is set to 200 OK. When a slave responds the response content is "false" and the response status is 303 SEE OTHER, with a Location header set to the value of the actual master's HA URI. This allows usage of this plugin as alive check in Amazon ELB.  
+
 Note that getMaster returns not the REST port (default of 7474) but the HA port (default 6001). You will have to manipulate the string if you need different information, such as only the host.
