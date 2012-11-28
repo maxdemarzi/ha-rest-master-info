@@ -64,4 +64,19 @@ public class MasterInfoTest
         assertEquals( 303, response.getStatus() );
         assertEquals( "localhost:6001", response.getMetadata().get( HttpHeaders.LOCATION ).get( 0 ) );
     }
+
+    @Test
+    public void shouldReturn200OnIsSlaveTrue() throws Exception
+    {
+        when( haDbStub.isMaster() ).thenReturn( false );
+        assertEquals( 200, new MasterInfo( haDbStub ).isSlave().getStatus());
+    }
+
+    @Test
+    public void shouldReturn303OnIsSlaveFalse() throws Exception
+    {
+        when( haDbStub.isMaster() ).thenReturn( true );
+        assertEquals( 303, new MasterInfo( haDbStub ).isSlave().getStatus());    
+    }
+
 }

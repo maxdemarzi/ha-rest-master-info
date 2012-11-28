@@ -12,9 +12,9 @@ org.neo4j.server.thirdparty_jaxrs_classes=org.neo4j.ha.server.rest.info=/ha-info
 
 When you restart you should be able to do a
 
-curl http://<server>:<port>/ha-info/masterinfo/{isMaster,getMaster}
+curl http://<server>:<port>/ha-info/masterinfo/{isMaster,isSlave,getMaster}
 
-and get a true/false for the first one and the <server>:<ha-port> for the second.
+and get a true/false for the first two and the <server>:<ha-port> for the last.
 
 In addition, when true is returned, the response status is set to 200 OK. When a slave responds the response content is "false" and the response status is 303 SEE OTHER, with a Location header set to the value of the actual master's HA URI. This allows usage of this plugin as alive check in Amazon ELB.  
 

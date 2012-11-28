@@ -10,7 +10,7 @@
   <groupId>org.neo4j.ha</groupId>
   <artifactId>ha-rest-master-info</artifactId>
   <name>Neo4j - HA Master Info Server Plugin</name>
-  <version>0.1</version>
+  <version>0.2</version>
   <description>An unmanaged extension for Neo4j REST server that provides information about the cluster master</description>
   <packaging>jar</packaging>
 
