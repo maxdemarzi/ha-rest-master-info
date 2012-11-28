@@ -76,7 +76,7 @@ public class MasterInfoTest
     public void shouldReturn303OnIsSlaveFalse() throws Exception
     {
         when( haDbStub.isMaster() ).thenReturn( true );
-        assertEquals( 303, new MasterInfo( haDbStub ).isSlave().getStatus());    
+        assertEquals( 503, new MasterInfo( haDbStub ).isSlave().getStatus());    
     }
 
 }

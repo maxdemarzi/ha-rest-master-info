@@ -96,7 +96,7 @@ public class MasterInfo
         }
         else
         {
-            return Response.status( Response.Status.SEE_OTHER ).entity( Boolean.toString( false ).getBytes() ).build();
+            return Response.status( Response.Status.SERVICE_UNAVAILABLE ).entity( Boolean.toString( false ).getBytes() ).build();
         }
     }
 
